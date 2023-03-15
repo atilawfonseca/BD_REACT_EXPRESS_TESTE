@@ -1,0 +1,2 @@
+para iniciar o server com o nodemon:
+npm run devStart. 

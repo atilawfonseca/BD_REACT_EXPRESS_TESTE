@@ -1,0 +1,11 @@
+
+
+body parser
+
+bodyParser serve para trabalhar com os dados vindo do seu cliente. Quando o cliente manda dados via form payload, 
+esse pacote ele formata e transforma os dados para o formato de objeto javascript e joga tudo isso em um objeto dentro 
+do objeto de requisição (req): req. Deve ser instalado junto com o express e mysql 
+
+nodemon
+
+ferramenta utilizada para reiniciar o servidor automaticamente a cada nova mudança. 
