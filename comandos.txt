@@ -1,2 +1,6 @@
 para iniciar o server com o nodemon:
 npm run devStart. 
+
+no mysql coloquei os seguintes comandos:
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'At1l@040789';
+flush privileges;
