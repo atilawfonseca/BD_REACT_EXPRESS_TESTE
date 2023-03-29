@@ -5,22 +5,38 @@ import { useState, useEffect } from "react";
 function App() {
   const [moviename, setMovieName] = useState("");
   const [review, setReview] = useState("");
-  const [movieList, setMovieList] = useState('');
+  //se for trabalhar com um array precisa adicionar esse [] para funcionar o map
+  const [movieList, setMovieList] = useState([]);
+
+
+//onde estou https://www.youtube.com/watch?v=_S2GKnFpdtE
 
   useEffect(() => {
     Axios.get("http://localhost:5000/api/get").then((response) => {
       setMovieList(response.data);
+  
     });
-  });
+  },[]);
+
+  
 
   const submitReview = async (e) => {
-    Axios.post("http://localhost:5000/api/insert", {
+    Axios.post("http://localhost:5000/api/insert", { 
       movieName: moviename,
       movieReview: review,
     }).then(() => {
       alert("Sucessful insert");
     });
+    
+    setMovieList([
+      ...movieList, {movieName: moviename , movieReview: review }
+    ]);
   };
+
+ 
+  const deleteMovie = async (movie) => {
+    Axios.delete(`http://localhost:5000/api/delete/${movie}`)
+  }
 
   return (
     <div className="App">
@@ -46,9 +62,22 @@ function App() {
         <button onClick={submitReview}>Submit</button>
       </form>
 
-      {/* {movieList.map((val) => {
-        return (<h1> MovieName: {val.movieName} || MovieReview : {val.movieReview}</h1>);
-      })} */}
+      {
+        movieList.map((item) => {
+          return (
+          <div key={item.id}  className="card">
+            <h1> {item.movieName}</h1>
+            <p>{item.movieReview}</p>
+
+            <button onClick={() => {deleteMovie(item.movieName)}} >Delete</button>
+            <input type="text" id="updateInput" />
+            <button>Update</button>
+
+            </div>
+            )
+        })
+      }
+    
 
     </div>
     

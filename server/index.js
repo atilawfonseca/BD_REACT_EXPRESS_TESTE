@@ -52,7 +52,15 @@ app.get("/", (req, res) => {
   });
 });
 
+app.delete(`/api/delete/:movieName`, (req, resp)=> {
+  const name = req.params.movieName; 
+  const sqlDelete = 
+  "DELETE FROM `cruddatabase`.`movie_reviews` WHERE (`movieName` = ?);"
 
+  db.query(sqlDelete, name, (erro, result) => {
+    if(erro) console.log(erro);
+  })
+})
 
 app.listen(port, () => {
   console.log("running on port 5000");
