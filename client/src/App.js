@@ -5,8 +5,11 @@ import { useState, useEffect } from "react";
 function App() {
   const [moviename, setMovieName] = useState("");
   const [review, setReview] = useState("");
+  const [newReview, setNewReview] = useState("");
   //se for trabalhar com um array precisa adicionar esse [] para funcionar o map
   const [movieList, setMovieList] = useState([]);
+
+
 
 
 //onde estou https://www.youtube.com/watch?v=_S2GKnFpdtE
@@ -18,7 +21,16 @@ function App() {
     });
   },[]);
 
-  
+  const updateMovie = async (movie) => {
+    Axios.put("http://localhost:5000/api/update", {
+      movieName: movie,
+      movieReview: newReview,
+      
+    }).then((erro) => {
+      console.log(erro)
+    })
+    setNewReview("");
+  }; 
 
   const submitReview = async (e) => {
     Axios.post("http://localhost:5000/api/insert", { 
@@ -37,6 +49,8 @@ function App() {
   const deleteMovie = async (movie) => {
     Axios.delete(`http://localhost:5000/api/delete/${movie}`)
   }
+
+  
 
   return (
     <div className="App">
@@ -59,7 +73,7 @@ function App() {
           }}
         ></input>
 
-        <button onClick={submitReview}>Submit</button>
+        <button onClick={submitReview }>Submit</button>
       </form>
 
       {
@@ -70,8 +84,8 @@ function App() {
             <p>{item.movieReview}</p>
 
             <button onClick={() => {deleteMovie(item.movieName)}} >Delete</button>
-            <input type="text" id="updateInput" />
-            <button>Update</button>
+            <input type="text" id="updateInput"  onChange={(e) => {setNewReview(e.target.value)}}/>
+            <button onClick={() => {updateMovie(item.movieName)}}>Update</button>
 
             </div>
             )

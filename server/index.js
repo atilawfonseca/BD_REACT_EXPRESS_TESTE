@@ -62,6 +62,17 @@ app.delete(`/api/delete/:movieName`, (req, resp)=> {
   })
 })
 
+app.put("/api/update", (req, resp) => {
+  const name = req.body.movieName; 
+  const review = req.body.movieReview;
+
+  const sqlUpdate = "UPDATE `cruddatabase`.`movie_reviews` SET `movieReview` = ? WHERE (`movieName` = ?);"
+
+  db.query(sqlUpdate, [review, name], (erro, result) => {
+    if(erro) console.log(erro);
+  })
+})
+
 app.listen(port, () => {
   console.log("running on port 5000");
 });
